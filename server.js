@@ -24,6 +24,7 @@ const usersRoutes = require("./routes/users");
 const tasksRoutes = require("./routes/tasks");
 const classesRoutes = require("./routes/classes");
 const userRegistrationRoutes=require("./routes/userRegistration");
+const userLoginRoutes=require("./routes/user_login");
 
 let bayesModel=require("./public/scripts/classifier.js").bayesModel;
 
@@ -57,6 +58,7 @@ app.use("/api/users", usersRoutes(knex));
 app.use("/api/tasks", tasksRoutes(knex));
 app.use("/api/classes", classesRoutes(knex));
 app.use("/user_registration",userRegistrationRoutes(knex));
+app.use("/user_login",userLoginRoutes(knex));
 
 /*
 * GET request for root
@@ -93,25 +95,6 @@ app.get("/login",(req,res)=>{
 
 // })
 
-//Login page
-//When user submits correct username / pass compares input to database
-//If it matches - redirects to root
-app.post("/user_login", (req, res) => {
-  knex.select("*").from('users').where('username', req.body.username).then((result) => {
-    if (bcrypt.compare(req.body.password,result[0].password,salt,null)) {
-      knex.select("*").from('taskClasses').then((data)=>{
-        for(var i=0;i<data.length;i++){
-          let tempTask=data[i];
-          bayesModel.learn(tempTask.task,tempTask.class);
-        }
-      })
-      req.session.username = req.body.username;
-      res.redirect("/");
-    } else {
-      res.status(403).send("The username or password incorrect");
-    }
-  })
-});
 
 /*
 * POST request for adding a new task
