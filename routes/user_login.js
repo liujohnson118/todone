@@ -14,8 +14,6 @@ module.exports = (knex) => {
           res.status(403).send('user does not exist');
         }else{
           let userHash=data[0].password;
-          console.log("User typed: "+req.body.password+" as password for login");
-          console.log("Hashed password from database for this user is: "+userHash);
           bcrypt.compare(req.body.password,userHash,function(error, result){
             console.log('Result is '+result);
             if(result){
