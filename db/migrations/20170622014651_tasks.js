@@ -5,9 +5,10 @@ exports.up = function(knex, Promise) {
     table.string('category');
     table.string('content');
     table.date('date');
-    table.integer('users_id').references('users.id');
+    table.integer('user_id').references('users.id');
   });
 };
+
 exports.down = function(knex, Promise) {
   return knex.schema.dropTable('tasks');
 };

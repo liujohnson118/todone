@@ -72,10 +72,7 @@ function findLatestTaskByCat(cat) {
     })
   })
 }
-// findLatestTaskByCat('b').then(console.log);
-// findLatestTaskByCat('e').then(console.log);
-// findLatestTaskByCat('r').then(console.log);
-// findLatestTaskByCat('w').then(console.log);
+
 /*
 * GET request for root
 * If logged in, render the page with the 4 lists
@@ -85,18 +82,13 @@ app.get("/", (req, res) => {
   var latestTasks={};
   if (req.session.username) {
     findLatestTaskByCat('b').then((task)=>{
-      console.log("b "+task);
       latestTasks['b']=task;
       findLatestTaskByCat('e').then((task)=>{
-        console.log("e "+task);
         latestTasks['e']=task;
         findLatestTaskByCat('r').then((task)=>{
-          console.log("r "+task);
           latestTasks['r']=task;
           findLatestTaskByCat('w').then((task)=>{
-            console.log("w "+task);
             latestTasks['w']=task;
-            console.log("All tasks are: "+latestTasks.b+" "+latestTasks.e+" "+latestTasks.r+" "+latestTasks.w);
             res.render("index",latestTasks);
           });
         });

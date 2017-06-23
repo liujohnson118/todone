@@ -9,7 +9,6 @@ module.exports = (knex) => {
   router.post("/", (req, res) => {
      if(req.body.task.replace(/ /g,"").length>0){
       let tempTask=req.body.task;
-      console.log("Uuuuuuuuuuu");
         knex('tasks').insert({category:bayesModel.categorize(tempTask),content:tempTask}).then((result)=>{
           res.redirect("/");
         });

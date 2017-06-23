@@ -18,6 +18,8 @@ module.exports = (knex) => {
             console.log('Result is '+result);
             if(result){
               console.log("Password correct");
+              req.session.username=req.body.username;
+              res.redirect("/");
             }else{
               res.status(403).send('Wrong password');
             }
