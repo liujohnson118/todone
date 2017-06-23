@@ -17,14 +17,7 @@ module.exports = (knex) => {
           bcrypt.compare(req.body.password,userHash,function(error, result){
             console.log('Result is '+result);
             if(result){
-              knex('taskClasses').select("*").then((learningTasks)=>{
-                for(var i=0;i<learningTasks.length;i++){
-                  let tempTask=learningTasks[i];
-                  bayesModel.learn(tempTask.task,tempTask.class);
-                }
-              })
-              req.session.username=req.body.username;
-              res.redirect('/');
+              console.log("Password correct");
             }else{
               res.status(403).send('Wrong password');
             }

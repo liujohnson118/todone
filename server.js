@@ -15,7 +15,7 @@ const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 const bcrypt      = require('bcrypt');
 const cookieSession = require("cookie-session");
-
+let bayesModel=require("./public/scripts/classifier.js").bayesModel;
 
 const salt=10;
 
@@ -25,8 +25,8 @@ const tasksRoutes = require("./routes/tasks");
 const classesRoutes = require("./routes/classes");
 const userRegistrationRoutes=require("./routes/userRegistration");
 const userLoginRoutes=require("./routes/user_login");
+const newTaskRoutes=require("./routes/newTask");
 
-let bayesModel=require("./public/scripts/classifier.js").bayesModel;
 
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
@@ -59,21 +59,50 @@ app.use("/api/tasks", tasksRoutes(knex));
 app.use("/api/classes", classesRoutes(knex));
 app.use("/user_registration",userRegistrationRoutes(knex));
 app.use("/user_login",userLoginRoutes(knex));
+app.use("/new_task",newTaskRoutes(knex));
 
+function findLatestTaskByCat(cat) {
+  return new Promise((resolve, reject) => {
+   var task;
+    knex('tasks').select('content').where('category', cat)
+    .orderBy('id', 'desc')
+    .then((result) => {
+      task = result[0].content;
+         resolve(task);
+    })
+  })
+}
+// findLatestTaskByCat('b').then(console.log);
+// findLatestTaskByCat('e').then(console.log);
+// findLatestTaskByCat('r').then(console.log);
+// findLatestTaskByCat('w').then(console.log);
 /*
 * GET request for root
 * If logged in, render the page with the 4 lists
 * If not logged in, render the register page
 */
 app.get("/", (req, res) => {
+  var latestTasks={};
   if (req.session.username) {
-    knex('tasks').orderBy('id', 'desc').first('id', 'content').then((result) => {
-      let latest = result.content;
-      let templateVars = {
-        latest: latest
-      };
-      res.render("index", templateVars);
+    findLatestTaskByCat('b').then((task)=>{
+      console.log("b "+task);
+      latestTasks['b']=task;
+      findLatestTaskByCat('e').then((task)=>{
+        console.log("e "+task);
+        latestTasks['e']=task;
+        findLatestTaskByCat('r').then((task)=>{
+          console.log("r "+task);
+          latestTasks['r']=task;
+          findLatestTaskByCat('w').then((task)=>{
+            console.log("w "+task);
+            latestTasks['w']=task;
+            console.log("All tasks are: "+latestTasks.b+" "+latestTasks.e+" "+latestTasks.r+" "+latestTasks.w);
+            res.render("index",latestTasks);
+          });
+        });
+      });
     });
+    //res.render("index");
   } else {
     res.render("register");
   }
@@ -90,10 +119,6 @@ app.get("/login",(req,res)=>{
   res.render("register.ejs");
 });
 
-// app.get("/eatcategory", (req, res) => {
-// //   res.render("../")
-
-// })
 
 
 /*
