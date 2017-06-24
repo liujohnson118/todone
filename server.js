@@ -60,17 +60,22 @@ app.use("/api/classes", classesRoutes(knex));
 app.use("/user_registration",userRegistrationRoutes(knex));
 app.use("/user_login",userLoginRoutes(knex));
 app.use("/new_task",newTaskRoutes(knex));
+app.use((req, res, next) => {
+  res.locals.user=req.session.username;
+  //console.log(res.locals.user);
+  next();
+})
 
-function findLatestTaskByCat(cat) {
-  return new Promise((resolve, reject) => {
-   var task;
-    knex('tasks').select('content').where('category', cat)
-    .orderBy('id', 'desc')
-    .then((result) => {
-      task = result[0].content;
-         resolve(task);
-    })
-  })
+function findLatestTaskByCat(cat, currentUser) {
+
+  var task;
+  console.log("Current USER IS "+currentUser);
+  return knex('tasks').select('user_id','content').where('category',cat).andWhere('user_id',currentUser)
+      .orderBy('id', 'desc')
+      .then((result) => {
+        task = result[0].content;
+        return task;
+      })
 }
 
 /*
@@ -79,22 +84,27 @@ function findLatestTaskByCat(cat) {
 * If not logged in, render the register page
 */
 app.get("/", (req, res) => {
-  var latestTasks={};
-  if (req.session.username) {
-    findLatestTaskByCat('b').then((task)=>{
-      latestTasks['b']=task;
-      findLatestTaskByCat('e').then((task)=>{
-        latestTasks['e']=task;
-        findLatestTaskByCat('r').then((task)=>{
-          latestTasks['r']=task;
-          findLatestTaskByCat('w').then((task)=>{
-            latestTasks['w']=task;
-            res.render("index",latestTasks);
-          });
-        });
-      });
-    });
-    //res.render("index");
+  let currentUser=req.session.username;
+  if (currentUser) {
+
+    // Promise.all taskes an array of promises, and returns a promise of an array
+    Promise.all([
+      findLatestTaskByCat('b',currentUser),
+      findLatestTaskByCat('e',currentUser),
+      findLatestTaskByCat('r',currentUser),
+      findLatestTaskByCat('w',currentUser),
+
+      // look up 'destructuring' on MDN
+    ]).then(([b, e, r, w]) => {
+      return { b, e, r, w };
+      // ...
+    }).catch((err) => {
+      return { b: "bbb",e:"eee", r:"rrr",w:"www"};
+    }).then((latestTasks) => {
+        res.render('index', {tasks:latestTasks});
+    })
+
+
   } else {
     res.render("register");
   }

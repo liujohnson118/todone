@@ -5,6 +5,10 @@ const router  = express.Router();
 
 module.exports = (knex) => {
 
+  /*
+  * Handles GET request for /api/tasks
+  * Show in json format all tasks
+  */
   router.get("/", (req, res) => {
     knex
       .select("*")

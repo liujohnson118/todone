@@ -7,6 +7,11 @@ const bcrypt      = require('bcrypt');
 
 module.exports = (knex) => {
 
+  /*
+  * Handles POST request for /user_registration form
+  * If user enters a username or email already in our database, send error message
+
+  */
   router.post("/", (req, res) => {
       knex('users').count("*").where('username',req.body.username).orWhere('email',req.body.email).then((result) => {
     if(Number(result[0].count)>0){

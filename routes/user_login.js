@@ -8,6 +8,12 @@ let bayesModel=require("../public/scripts/classifier.js").bayesModel;
 
 module.exports = (knex) => {
 
+  /*
+  * Handles POST request for /user_login form
+  * If username entered exisits in data base and password check is correct, redirect to root
+  * If no username exists in database, send error message
+  * If password is wrong, send error message
+  */
   router.post("/", (req, res) => {
       knex.select("password").from('users').where('username', req.body.username).limit(1).then((data) => {
         if(data.length<1){
