@@ -22,6 +22,7 @@ const salt=10;
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 const tasksRoutes = require("./routes/tasks");
+const catRoutes = require("./routes/showCat");
 const classesRoutes = require("./routes/classes");
 const userRegistrationRoutes=require("./routes/userRegistration");
 const userLoginRoutes=require("./routes/user_login");
@@ -57,6 +58,7 @@ app.use(express.static("public"));
 app.use("/api/users", usersRoutes(knex));
 app.use("/api/tasks", tasksRoutes(knex));
 app.use("/api/classes", classesRoutes(knex));
+app.use("/api/showCat", catRoutes(knex)); 
 app.use("/user_registration",userRegistrationRoutes(knex));
 app.use("/user_login",userLoginRoutes(knex));
 app.use("/new_task",newTaskRoutes(knex));
@@ -71,11 +73,25 @@ function findLatestTaskByCat(cat, currentUser) {
   var task;
   console.log("Current USER IS "+currentUser);
   return knex('tasks').select('user_id','content').where('category',cat).andWhere('user_id',currentUser)
-      .orderBy('id', 'desc')
-      .then((result) => {
+    .orderBy('id', 'desc')
+    .then((result) => {
+      if (result.length > 0) {
         task = result[0].content;
-        return task;
-      })
+      } else {
+        task = undefined;
+      }
+      return task;
+    })
+}
+
+function findAllTasksByCat(cat, currentUser) {
+  var tasks;
+  return knex('tasks').select('content').where('category',cat).andWhere('user_id',currentUser)
+    .then((result) => {
+      tasks = result.map(row => row.content);
+      // console.log("fATBC result:", result, tasks);
+      return tasks;
+    })
 }
 
 /*
@@ -86,25 +102,27 @@ function findLatestTaskByCat(cat, currentUser) {
 app.get("/", (req, res) => {
   let currentUser=req.session.username;
   if (currentUser) {
-
     // Promise.all taskes an array of promises, and returns a promise of an array
     Promise.all([
       findLatestTaskByCat('b',currentUser),
       findLatestTaskByCat('e',currentUser),
       findLatestTaskByCat('r',currentUser),
       findLatestTaskByCat('w',currentUser),
-
+      findAllTasksByCat('b', currentUser),
+      findAllTasksByCat('e', currentUser),
+      findAllTasksByCat('r', currentUser),
+      findAllTasksByCat('w', currentUser),
       // look up 'destructuring' on MDN
-    ]).then(([b, e, r, w]) => {
-      return { b, e, r, w };
-      // ...
+    ]).then(([b, e, r, w, bb, ee, rr, ww]) => {
+      return { b, e, r, w, bb, ee, rr, ww };
     }).catch((err) => {
-      return { b: "bbb",e:"eee", r:"rrr",w:"www"};
-    }).then((latestTasks) => {
-        res.render('index', {tasks:latestTasks});
+      res.status(500).send("Something went wrong");
+    }).then((results) => {
+      res.render('index', {
+        latest: {b: results.b, e: results.e, r: results.r, w: results.w},
+        allTasks: {b: results.bb, e: results.ee, r: results.rr, w: results.ww},
+      });
     })
-
-
   } else {
     res.render("register");
   }

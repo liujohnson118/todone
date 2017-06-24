@@ -6,11 +6,17 @@
     <%include ./partials/_header.ejs%>
   </head>
 
+  <script>
+    <% console.log(latest, allTasks); %>
+  </script>
+
+
   <body>
     <main>
       <section class="eat-watch-section">
-        <div><span>Eat</span><br><%= tasks.e%></div>
-        <div style="margin-left:97px";><span>Watch</span><br><%= tasks.w%></div>
+        <div><span>Eat</span><br><%= latest.e %></div>
+        <br><%= allTasks.e %>
+        <div style="margin-left:97px";><span>Watch</span><br><%= latest.w%></div>
       </section>
 
       <section class="input-section">
@@ -21,8 +27,8 @@
       </section>
 
       <section class="read-buy-section">
-         <div><span>Read</span><br><%= tasks.r%></div>
-        <div style="margin-left:97px;"><span>Buy</span><br><%= tasks.b%></div>
+         <div><span>Read</span><br><%= latest.r %></div>
+        <div style="margin-left:97px;"><span>Buy</span><br><%= latest.b%></div>
       </section>
     </main>
   </body>
