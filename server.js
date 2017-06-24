@@ -64,12 +64,11 @@ app.use("/user_login",userLoginRoutes(knex));
 app.use("/new_task",newTaskRoutes(knex));
 app.use((req, res, next) => {
   res.locals.user=req.session.username;
-  //console.log(res.locals.user);
   next();
 })
-
+//findLatestTaskByCat retrieves the most recent tasks for each category 
+//That are unique to that user
 function findLatestTaskByCat(cat, currentUser) {
-
   var task;
   console.log("Current USER IS "+currentUser);
   return knex('tasks').select('user_id','content').where('category',cat).andWhere('user_id',currentUser)
@@ -83,15 +82,27 @@ function findLatestTaskByCat(cat, currentUser) {
       return task;
     })
 }
-
+//findAllTasksByCat retrieves all tasks for each category 
+//That are unique to that user
 function findAllTasksByCat(cat, currentUser) {
   var tasks;
   return knex('tasks').select('content').where('category',cat).andWhere('user_id',currentUser)
     .then((result) => {
       tasks = result.map(row => row.content);
-      // console.log("fATBC result:", result, tasks);
       return tasks;
     })
+}
+
+function findAllUserInfo(currentUser) {
+  var userInfo;
+  return knex('users').select('*').where('username', currentUser).limit(1)
+  .then((result) => {
+    if(result.length > 0){
+      return result[0];
+    }else{
+      return undefined;
+    }
+  })
 }
 
 /*
@@ -143,7 +154,24 @@ app.post("/logout",(req,res)=>{
   req.session=null;
   res.redirect("/");
 })
-
+app.get("/profile", (req,res) => {
+  let currentUser = req.session.username;
+  if (currentUser) {
+  Promise.all([
+    findAllUserInfo(currentUser),
+  ]).then(([currentUser]) => {
+    return {'username': currentUser.username, 'email': currentUser.email, 'password': currentUser.password};
+  }).catch((err) => {
+    res.status(500).send("Something went wrong")
+  }).then((results) => {
+    res.render('profile', {
+       userInfo : {username: results.username, email: results.email, password: results.password},
+    });
+  })
+  } else {
+    res.render("register");
+  }
+})
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
