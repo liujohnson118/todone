@@ -58,7 +58,7 @@ app.use(express.static("public"));
 app.use("/api/users", usersRoutes(knex));
 app.use("/api/tasks", tasksRoutes(knex));
 app.use("/api/classes", classesRoutes(knex));
-app.use("/api/showCat", catRoutes(knex)); 
+app.use("/api/showCat", catRoutes(knex));
 app.use("/user_registration",userRegistrationRoutes(knex));
 app.use("/user_login",userLoginRoutes(knex));
 app.use("/new_task",newTaskRoutes(knex));
@@ -138,27 +138,6 @@ app.get("/register",(req,res)=>{
 app.get("/login",(req,res)=>{
   res.render("register.ejs");
 });
-
-
-
-/*
-* POST request for adding a new task
-* If logged in, add task to tasks table in database midterm
-* If not logged in, send error to remind user to login first
-*/
-app.post("/new_task",(req,res)=>{
-  if(req.session.username){
-    knex.select('id').from('users').where('username',req.session.username).then((result)=>{
-      let tempClass=bayesModel.categorize(req.body.task);
-      knex('tasks').insert({category:tempClass,content:req.body.task,date:new Date(),users_id:result[0].id}).then((result)=>{
-        console.log("The task "+req.body.task+" is classified as "+bayesModel.categorize(req.body.task));
-        res.redirect("/");
-      });
-    })
-  }else{
-    res.status(403).send("Please login first before you can add a task");
-  }
-})
 
 app.post("/logout",(req,res)=>{
   req.session=null;
