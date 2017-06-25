@@ -84,9 +84,13 @@ function findAllTasksByCat(cat, currentUser) {
   var tasks;
   return knex('tasks').select('*').where('category',cat).andWhere('user_id',currentUser)
     .then((result) => {
+      if(result.length > 0){
       tasks = result.map(row => row.content);
       return tasks;
-    })
+    } else {
+      return undefined;
+    }
+  })
 }
 
 function findAllUserInfo(currentUser) {
@@ -150,6 +154,20 @@ app.post("/logout",(req,res)=>{
   req.session=null;
   res.redirect("/");
 })
+
+app.post("/tasks/:id/delete",(req,res)=>{
+    if(req.session.username){
+      let taskID=req.params.id;
+      knex('tasks').where('id',taskID).del().then((result)=>{
+        res.redirect("/");
+      });
+    }else{
+      res.status(403).send('Cannot delete unless you sign in');
+  }
+
+
+})
+
 app.get("/profile", (req,res) => {
   let currentUser = req.session.username;
   if (currentUser) {

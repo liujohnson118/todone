@@ -15,10 +15,13 @@
 
   <body>
     <main>
-      <script type="text/javascript">window.taskId = '<%= latest.e[0].id%>'</script>
+      <script type="text/javascript">window.latestEatId = '<%= latest.e[0].id%>'</script>
+      <script type="text/javascript">window.latestBuyId = '<%= latest.b[0].id%>'</script>
+      <script type="text/javascript">window.latestWatchId = '<%= latest.w[0].id%>'</script>
+      <script type="text/javascript">window.latestReadId = '<%= latest.r[0].id%>'</script>
       <section class="eat-watch-section">
-        <div><span>Eat</span><br><%= latest.e[0].id %></div>
-        <div style="margin-left:97px";><span>Watch</span><br><%= latest.w%></div>
+        <div><span class="eatTask">Eat</span><br><%= latest.e[0].id %></div>
+        <div style="margin-left:97px";><span class="watchTask">Watch</span><br><%= latest.w[0].id%></div>
       </section>
 
       <section class="input-section">
@@ -29,8 +32,8 @@
       </section>
 
       <section class="read-buy-section">
-         <div><span>Read</span><br><%= latest.r %></div>
-        <div style="margin-left:97px;"><span>Buy</span><br><%= latest.b%></div>
+         <div><span>Read</span><br><%= latest.r[0].id %></div>
+        <div style="margin-left:97px;"><span>Buy</span><br><%= latest.b[0].id%></div>
       </section>
     </main>
   </body>
