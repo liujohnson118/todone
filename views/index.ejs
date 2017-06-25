@@ -1,20 +1,23 @@
 <!DOCTYPE html>
+<meta charset="utf-8">
 <html lang="en">
    <head>
     <meta charset="utf-8">
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../styles/layout.css">
     <%include ./partials/_header.ejs%>
   </head>
-
+  <script type="text/javascript" src="../scripts/test.js"></script>
   <script>
-    <% console.log(latest, allTasks); %>
+    <% console.log("ALL",   latest, "ALL TASKS", allTasks); %>
   </script>
 
 
   <body>
     <main>
+      <script type="text/javascript">window.taskId = '<%= latest.e[0].id%>'</script>
       <section class="eat-watch-section">
-        <div><span>Eat</span><br><%= latest.e %></div>
+        <div><span>Eat</span><br><%= latest.e[0].id %></div>
         <div style="margin-left:97px";><span>Watch</span><br><%= latest.w%></div>
       </section>
 

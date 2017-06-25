@@ -66,23 +66,19 @@ app.use((req, res, next) => {
   res.locals.user=req.session.username;
   next();
 })
-//findLatestTaskByCat retrieves the most recent tasks for each category 
+//findLatestTaskByCat retrieves the most recent tasks for each category
 //That are unique to that user
 function findLatestTaskByCat(cat, currentUser) {
   var task;
   console.log("Current USER IS "+currentUser);
-  return knex('tasks').select('user_id','content').where('category',cat).andWhere('user_id',currentUser)
+  return knex('tasks').select('*').where('category',cat).andWhere('user_id',currentUser)
     .orderBy('id', 'desc')
     .then((result) => {
-      if (result.length > 0) {
-        task = result[0].content;
-      } else {
-        task = undefined;
-      }
+      task = result;
       return task;
     })
 }
-//findAllTasksByCat retrieves all tasks for each category 
+//findAllTasksByCat retrieves all tasks for each category
 //That are unique to that user
 function findAllTasksByCat(cat, currentUser) {
   var tasks;
