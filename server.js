@@ -86,7 +86,7 @@ function findLatestTaskByCat(cat, currentUser) {
 //That are unique to that user
 function findAllTasksByCat(cat, currentUser) {
   var tasks;
-  return knex('tasks').select('content').where('category',cat).andWhere('user_id',currentUser)
+  return knex('tasks').select('*').where('category',cat).andWhere('user_id',currentUser)
     .then((result) => {
       tasks = result.map(row => row.content);
       return tasks;
