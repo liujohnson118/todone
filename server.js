@@ -27,6 +27,7 @@ const classesRoutes = require("./routes/classes");
 const userRegistrationRoutes=require("./routes/userRegistration");
 const userLoginRoutes=require("./routes/user_login");
 const newTaskRoutes=require("./routes/newTask");
+const allEatsRoutes=require("./routes/allEatsRoutes");
 
 
 
@@ -66,6 +67,7 @@ app.use((req, res, next) => {
   res.locals.user=req.session.username;
   next();
 })
+app.use("/allEats",allEatsRoutes(knex));
 //findLatestTaskByCat retrieves the most recent tasks for each category
 //That are unique to that user
 function findLatestTaskByCat(cat, currentUser) {
@@ -74,8 +76,11 @@ function findLatestTaskByCat(cat, currentUser) {
   return knex('tasks').select('*').where('category',cat).andWhere('user_id',currentUser)
     .orderBy('id', 'desc')
     .then((result) => {
-      task = result;
-      return task;
+      if(result.length > 0){
+      return result;
+    }else{
+      return undefined;
+    }
     })
 }
 //findAllTasksByCat retrieves all tasks for each category
@@ -129,7 +134,7 @@ app.get("/", (req, res) => {
     }).catch((err) => {
       res.status(500).send("Something went wrong");
     }).then((results) => {
-      res.render('index', {
+      res.render('index2', {
         latest: {b: results.b, e: results.e, r: results.r, w: results.w},
         allTasks: {b: results.bb, e: results.ee, r: results.rr, w: results.ww},
       });
@@ -164,8 +169,39 @@ app.post("/tasks/:id/delete",(req,res)=>{
     }else{
       res.status(403).send('Cannot delete unless you sign in');
   }
+})
 
+app.post("/removeTask",(req,res)=>{
+  if(req.session.username){
+    let taskID=req.body.taskID;
+    knex('tasks').where('id',taskID).del().then((result)=>{
+      res.redirect("/");
+    })
+  }else{
+   res.status(403).send('Cannot delete unless you sign in');
+  }
+})
 
+app.post("/reclassifyTask",(req,res)=>{
+  if(req.session.username){
+    let taskID=req.body.taskID;
+    let newClass=req.body.taskNewClass
+    if(["b","e","r","w"].indexOf(newClass)===-1){
+      res.status(403).send("The class you entered is invalid");
+    }
+    knex('tasks').where('id',taskID).limit(1).then((data)=>{
+      if(data.length>0){
+        bayesModel.learn(data[0].content,newClass);
+        knex('tasks').where('id',taskID).update({category:newClass}).then((result)=>{
+          res.redirect("/");
+        })
+      }else{
+        res.status(403).send("The task ID you entered does not exist");
+      }
+    })
+  }else{
+   res.status(403).send('Cannot delete unless you sign in');
+  }
 })
 
 app.get("/profile", (req,res) => {

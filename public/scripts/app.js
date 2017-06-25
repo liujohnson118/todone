@@ -22,3 +22,14 @@ $(() => {
     }
   });;
 });
+
+$(()=>{
+  $.ajax({
+    method:"GET",
+    url:"/allEats"
+  }).done((eatTasks)=>{
+    eatTasks.forEach(eatTask){
+      $("#eatTask").append("<h2>FUCK</h2>");
+    }
+  })
+});

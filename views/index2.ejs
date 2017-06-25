@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html lang="en">
+   <head>
+    <meta charset="utf-8">
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../styles/layout.css">
+    <%include ./partials/_header.ejs%>
+  </head>
+  <script type="text/javascript" src="../scripts/test.js"></script>
+  <script type="text/javascript" src="../scripts/app.js"></script>
+  <script>
+    <% console.log("ALL",   latest, "ALL TASKS", allTasks); %>
+  </script>
+
+
+  <body>
+    <main>
+
+      <section class="eat-watch-section">
+        <div><a href="/allEats">All Your Eat Tasks</a></div>
+        <div style="margin-left:97px";><span class="watchTask">Watch</span></div>
+      </section>
+
+      <section class="input-section">
+        <form method="POST" action="/new_task">
+          <input name="task" class="text-for-task" type="text"  placeholder="Enter task" />
+          <button>SUBMIT</button>
+        </form>
+        <form method="POST" action="/removeTask">
+          <input name="taskID" class="ID-for-task" type="text"  placeholder="Enter task ID to delete" />
+          <button>SUBMIT</button>
+        </form>
+        <form method="POST" action="/reclassifyTask">
+          <input name="taskID" class="ID-for-task" type="text"  placeholder="Enter task ID to reclassify" />
+          <input name="taskNewClass" class="newClass-for-task" type="text"  placeholder="Enter new task class" />
+          <button>SUBMIT</button>
+        </form>
+      </section>
+
+      <section class="read-buy-section">
+         <div><span>Read</span></div>
+        <div style="margin-left:97px;"><span>Buy</span></div>
+      </section>
+    </main>
+  </body>
+</html>

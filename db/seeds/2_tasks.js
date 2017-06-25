@@ -20,6 +20,10 @@ exports.seed = function(knex, Promise) {
         knex('tasks').insert({category: 'b', content: 'buy slippers', date: '2017-06-21',user_id:'x'}),
         knex('tasks').insert({category: 'w', content: 'watch CNN', date: '2017-06-21',user_id:'y'}),
         knex('tasks').insert({category: 'b', content: 'get a bottle of wine', date: '2017-06-21',user_id:'x'}),
+        knex('tasks').insert({category: 'b', content: 'get a bmw', date: new Date(),user_id:'o'}),
+        knex('tasks').insert({category: 'w', content: 'watch night movie', date: new Date(),user_id:'o'}),
+        knex('tasks').insert({category: 'r', content: 'read about biology', date: new Date(),user_id:'o'}),
+        knex('tasks').insert({category: 'e', content: 'have a bottle of wine', date:new Date(),user_id:'o'}),
       ]);
     });
 };

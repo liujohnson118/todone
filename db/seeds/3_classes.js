@@ -85,6 +85,13 @@ exports.seed = function(knex, Promise) {
         knex('taskClasses').insert({task: 'little text', class: 'r'}),
         knex('taskClasses').insert({task: 'small text', class: 'r'}),
         knex('taskClasses').insert({task: 'big text', class: 'r'}),
+        knex('taskClasses').insert({task: 'chapter 1', class: 'r'}),
+        knex('taskClasses').insert({task: 'chapter 5', class: 'r'}),
+        knex('taskClasses').insert({task: '5 chapters', class: 'r'}),
+        knex('taskClasses').insert({task: '6 chapters', class: 'r'}),
+        knex('taskClasses').insert({task: 'section 1.2', class: 'r'}),
+        knex('taskClasses').insert({task: 'section 9.1', class: 'r'}),
+        knex('taskClasses').insert({task: 'section 3.4', class: 'r'}),
 
         knex('taskClasses').insert({task: 'watch movie', class: 'w'}),
         knex('taskClasses').insert({task: 'watch TV', class: 'w'}),
