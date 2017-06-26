@@ -7,11 +7,11 @@
     <link rel="stylesheet" type="text/css" href="../styles/layout.css">
     <%include ./partials/_header.ejs%>
   </head>
-  <script type="text/javascript" src="../scripts/test.js"></script>
   <script type="text/javascript" src="../scripts/app.js"></script>
   <script>
     <% console.log("ALL",   latest, "ALL TASKS", allTasks); %>
     <% console.log("AHAHAHAHHA", allTasks.e) %>
+    <% console.log("FUCKKKKKK", latest.e.content); %>
   </script>
 
 
@@ -23,9 +23,19 @@
         <div>
         <a href="/allEats">All Your Eat Tasks</a>
         <br><span> <%= allTasks.e %></span>
+        <% if(latest.e[0] === undefined) { %>
+        <br>Eat something!
+        <% } else { %>
+        <br><span>Latest Task <%= latest.e[0].content %></span>
+        <% } %>
         </div>
         <div style="margin-left:97px";><span class="watchTask">Watch</span>
         <br><span> <%= allTasks.w %></span>
+         <% if(latest.w[0] === undefined) { %>
+        <br>Watch something!
+        <% } else { %>
+        <br><span>Latest Task <%= latest.w[0].content %></span>
+        <% } %>
         </div>
       </section>
 
@@ -48,10 +58,20 @@
       <section class="read-buy-section">
         <div><span>Read</span>
         <br><span> <%= allTasks.r %></span>
+        <% if(latest.r[0] === undefined) { %>
+        <br>Read something!
+        <% } else { %>
+        <br><span>Latest Task <%= latest.r[0].content %></span>
+        <% } %>
         </div>
         
         <div style="margin-left:97px;"><span>Buy</span>
         <br><span> <%= allTasks.b %></span>
+        <% if(latest.b[0] === undefined) { %>
+        <br>Buy something!
+        <% } else { %>
+        <br><span>Latest Task <%= latest.b[0].content %></span>
+        <% } %>
         </div>
         
       </section>

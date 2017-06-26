@@ -70,45 +70,45 @@ app.use((req, res, next) => {
 app.use("/allEats",allEatsRoutes(knex));
 //findLatestTaskByCat retrieves the most recent tasks for each category
 //That are unique to that user
-function findLatestTaskByCat(cat, currentUser) {
-  var task;
-  console.log("Current USER IS "+currentUser);
-  return knex('tasks').select('*').where('category',cat).andWhere('user_id',currentUser)
-    .orderBy('id', 'desc')
-    .then((result) => {
-      if(result.length > 0){
-      return result;
-    }else{
-      return undefined;
-    }
+  function findLatestTaskByCat(cat, currentUser) {
+    var task;
+    console.log("Current USER IS "+currentUser);
+    return knex('tasks').select('*').where('category',cat).andWhere('user_id',currentUser)
+      .orderBy('id', 'desc')
+      .then((result) => {
+        if(result.length > 0){
+        return result;
+      }else{
+        return [];
+      }
+      })
+  }
+  //findAllTasksByCat retrieves all tasks for each category
+  //That are unique to that user
+  function findAllTasksByCat(cat, currentUser) {
+    var tasks;
+    return knex('tasks').select('*').where('category',cat).andWhere('user_id',currentUser)
+      .then((result) => {
+        if(result.length > 0){
+        tasks = result.map(row => row.content);
+        return tasks;
+      } else {
+        return [];
+      }
     })
-}
-//findAllTasksByCat retrieves all tasks for each category
-//That are unique to that user
-function findAllTasksByCat(cat, currentUser) {
-  var tasks;
-  return knex('tasks').select('*').where('category',cat).andWhere('user_id',currentUser)
+  }
+
+  function findAllUserInfo(currentUser) {
+    var userInfo;
+    return knex('users').select('*').where('username', currentUser).limit(1)
     .then((result) => {
       if(result.length > 0){
-      tasks = result.map(row => row.content);
-      return tasks;
-    } else {
-      return undefined;
-    }
-  })
-}
-
-function findAllUserInfo(currentUser) {
-  var userInfo;
-  return knex('users').select('*').where('username', currentUser).limit(1)
-  .then((result) => {
-    if(result.length > 0){
-      return result[0];
-    }else{
-      return undefined;
-    }
-  })
-}
+        return result[0];
+      }else{
+        return [];
+      }
+    })
+  }
 
 /*
 * GET request for root
