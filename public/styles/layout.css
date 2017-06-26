@@ -1,13 +1,21 @@
 body {
-  background-color: #EEE;
+  text-align: center;
+}
+
+body::after {
+  content: "";
+  background: url("../images/doodle todo 2.jpg");
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
 }
 
 body h1 {
   color: #244751;
-}
-
-.navbar .pageLink {
-  padding-right: 20px;
 }
 
 main {
@@ -18,53 +26,39 @@ main {
 main section div {
   width: 300px;
   height: 280px;
-  background-color: tomato;
+  background-color: rgba(252, 248, 227, 0.9);
   border-radius: 50px;
   padding-top: 20px;
+  border: 3px solid lightgrey;
 }
 
 main section div:hover {
-  background-color: black;
-  color: white;
+  -webkit-box-shadow: #a28815 2px 2px 5px 2px;
 }
 
-main section .text-for-tasks {
-  width: 500px;
-  height: 50px;
-  border-radius: 40px;
-  font-size: 1.8em;
-  padding-left: 8px;
+/*====================
+  CLASS Selectors
+=====================*/
+.navbar .pageLink {
+  padding-right: 20px;
 }
 
-main .eat-watch-section {
-  width: 705px;
-  height: 300px;
-  margin: 50px 0px 50px 0px;
-  text-align: center;
+.navbar-inverse {
+  background-color: #8ca2cb;
 }
 
-main .eat-watch-section div {
-  display: inline-block;
+.footer-bottom {
+  margin-top: 10px;
+  margin: auto;
 }
 
-main .read-buy-section {
-  width: 705px;
-  height: 300px;
-  margin-top: 50px;
-  text-align: center;
+.copyright {
+  margin-left: auto;
+  margin-right: auto;
+  left: 50%;
+  right: 50%;
 }
 
-main .read-buy-section div {
-  display: inline-block;
-}
-
-main .input-section {
-  margin-top: 50px;
-  /*text-align: center;*/
-  margin-left: 5%;
-}
-
-.input-section > button {
-  height: 50px;
-  width: 100px;
+.form-horizontal {
+  margin-top: 35px;
 }
