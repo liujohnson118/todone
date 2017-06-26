@@ -11,6 +11,7 @@
   <script type="text/javascript" src="../scripts/app.js"></script>
   <script>
     <% console.log("ALL",   latest, "ALL TASKS", allTasks); %>
+    <% console.log("AHAHAHAHHA", allTasks.e) %>
   </script>
 
 
@@ -18,8 +19,14 @@
     <main>
 
       <section class="eat-watch-section">
-        <div><a href="/allEats">All Your Eat Tasks</a></div>
-        <div style="margin-left:97px";><span class="watchTask">Watch</span></div>
+        
+        <div>
+        <a href="/allEats">All Your Eat Tasks</a>
+        <br><span> <%= allTasks.e %></span>
+        </div>
+        <div style="margin-left:97px";><span class="watchTask">Watch</span>
+        <br><span> <%= allTasks.w %></span>
+        </div>
       </section>
 
       <section class="input-section">
@@ -39,8 +46,14 @@
       </section>
 
       <section class="read-buy-section">
-         <div><span>Read</span></div>
-        <div style="margin-left:97px;"><span>Buy</span></div>
+        <div><span>Read</span>
+        <br><span> <%= allTasks.r %></span>
+        </div>
+        
+        <div style="margin-left:97px;"><span>Buy</span>
+        <br><span> <%= allTasks.b %></span>
+        </div>
+        
       </section>
     </main>
   </body>
