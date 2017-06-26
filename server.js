@@ -90,8 +90,9 @@ app.use("/allEats",allEatsRoutes(knex));
     return knex('tasks').select('*').where('category',cat).andWhere('user_id',currentUser)
       .then((result) => {
         if(result.length > 0){
-        tasks = result.map(row => row.content);
-        return tasks;
+        tasks = result[0];
+        console.log([tasks]);
+        return [tasks];
       } else {
         return [];
       }

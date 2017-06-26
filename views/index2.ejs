@@ -10,8 +10,7 @@
   <script type="text/javascript" src="../scripts/app.js"></script>
   <script>
     <% console.log("ALL",   latest, "ALL TASKS", allTasks); %>
-    <% console.log("AHAHAHAHHA", allTasks.e) %>
-    <% console.log("FUCKKKKKK", latest.e.content); %>
+    <% console.log("hm", latest.e[0].id) %>
   </script>
 
 
@@ -19,19 +18,32 @@
     <main>
 
       <section class="eat-watch-section">
-        
         <div>
         <a href="/allEats">All Your Eat Tasks</a>
-        <br><span> <%= allTasks.e %></span>
+        <% if(allTasks.e[0] === undefined) { %> 
+        <br>        
+        <%} else { %>
+          <% for(var i = 0; i < Object.keys(latest.e).length; i++) { %>
+          <br><span>Task: <%= latest.e[i].content%> Id: <%= latest.e[i].id %></span>
+          <% } %>
+        <% } %>
         <% if(latest.e[0] === undefined) { %>
         <br>Eat something!
         <% } else { %>
-        <br><span>Latest Task <%= latest.e[0].content %></span>
+        <br><span>Your Latest Task is : <%= latest.e[0].content %>
+        <br> Your Latest Id is : <%=latest.e[0].id %></span>
         <% } %>
         </div>
         <div style="margin-left:97px";><span class="watchTask">Watch</span>
         <br><span> <%= allTasks.w %></span>
-         <% if(latest.w[0] === undefined) { %>
+        <% if(allTasks.w[0] === undefined) { %> 
+        <br>        
+        <%} else { %>
+          <% for(var i = 0; i < Object.keys(latest.w).length; i++) { %>
+          <br><span>Task: <%= latest.w[i].content%> Id: <%= latest.w[i].id %></span>
+          <% } %>
+        <% } %>
+        <% if(latest.w[0] === undefined) { %>
         <br>Watch something!
         <% } else { %>
         <br><span>Latest Task <%= latest.w[0].content %></span>
@@ -57,6 +69,13 @@
 
       <section class="read-buy-section">
         <div><span>Read</span>
+        <% if(allTasks.r[0] === undefined) { %> 
+        <br>        
+        <%} else { %>
+          <% for(var i = 0; i < Object.keys(latest.r).length; i++) { %>
+          <br><span>Task: <%= latest.r[i].content%> Id: <%= latest.r[i].id %></span>
+          <% } %>
+        <% } %>
         <br><span> <%= allTasks.r %></span>
         <% if(latest.r[0] === undefined) { %>
         <br>Read something!
@@ -66,7 +85,13 @@
         </div>
         
         <div style="margin-left:97px;"><span>Buy</span>
-        <br><span> <%= allTasks.b %></span>
+        <% if(allTasks.b[0] === undefined) { %> 
+        <br>        
+        <%} else { %>
+        <% for(var i = 0; i < Object.keys(latest.b).length; i++) { %>
+        <br><span>Task: <%= latest.b[i].content%> Id: <%= latest.b[i].id %></span>
+        <% } %>
+        <% } %>
         <% if(latest.b[0] === undefined) { %>
         <br>Buy something!
         <% } else { %>
