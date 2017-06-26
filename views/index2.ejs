@@ -53,7 +53,6 @@
         </div>
 
         <div class="col-md-4 col-md-offset-4 watch">
-          <br><span> <%= allTasks.w %></span>
         <% if(allTasks.w[0] === undefined) { %>
         <br>
         <%} else { %>
@@ -147,7 +146,6 @@
           <br><span>Task: <%= latest.r[i].content%> Id: <%= latest.r[i].id %></span>
           <% } %>
         <% } %>
-        <br><span> <%= allTasks.r %></span>
         <% if(latest.r[0] === undefined) { %>
         <br>Read
         <% } else { %>
