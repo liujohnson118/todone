@@ -28,6 +28,7 @@ const userRegistrationRoutes=require("./routes/userRegistration");
 const userLoginRoutes=require("./routes/user_login");
 const newTaskRoutes=require("./routes/newTask");
 const allEatsRoutes=require("./routes/allEatsRoutes");
+const updateEmailRoutes=require("./routes/updateEmail");
 
 
 
@@ -62,6 +63,7 @@ app.use("/api/classes", classesRoutes(knex));
 app.use("/api/showCat", catRoutes(knex));
 app.use("/user_registration",userRegistrationRoutes(knex));
 app.use("/user_login",userLoginRoutes(knex));
+app.use("/profile",updateEmailRoutes(knex));
 app.use("/new_task",newTaskRoutes(knex));
 app.use((req, res, next) => {
   res.locals.user=req.session.username;
@@ -204,6 +206,8 @@ app.post("/reclassifyTask",(req,res)=>{
    res.status(403).send('Cannot delete unless you sign in');
   }
 })
+
+
 
 app.get("/profile", (req,res) => {
   let currentUser = req.session.username;

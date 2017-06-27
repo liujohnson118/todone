@@ -23,7 +23,15 @@
     <input name="newEmail" type="email" placeholder=" Your New Email">
     <span>Re-enter your email</span>
     <input name="newEmailReenter" type="email" placeholder=" Your New Email">
-    <button type="submit" value="Register" class="btn btn-default">Update Email</button></form>
+    <button type="submit" value="updateEmail" class="btn btn-default">Update Email</button></form>
+    </form>
+    <br>To update your password, enter your new password and confirm it by entering again</br>
+    <form action="/updatePW" method="POST">
+    <span>Your new password</span>
+    <input name="newPW" type="password" placeholder=" Your new password">
+    <span>Re-enter your password</span>
+    <input name="newPWReenter" type="password" placeholder=" Confirm password">
+    <button type="submit" value="updatePW" class="btn btn-default">Update Password</button></form>
     </form>
   </body>
 
