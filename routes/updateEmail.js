@@ -2,6 +2,7 @@
 
 const express = require('express');
 const router  = express.Router();
+const bcrypt=require('bcrypt');
 
 
 module.exports = (knex) => {
@@ -11,12 +12,13 @@ module.exports = (knex) => {
   * If user enters a username or email already in our database, send error message
 
   */
-  router.post("/updateEmail", (req, res) => {
+  router.post("/", (req, res) => {
     let currentUser=req.session.username;
     if(!currentUser){
       res.status(403).send('Log in first to access your profile');
     }else{
       if(req.body.newEmail === req.body.newEmailReenter){
+        console.log("FUFFUIJ");
         knex('users').where('username',currentUser).update({email:req.body.newEmail}).then((result)=>{
           res.redirect("/");
         })

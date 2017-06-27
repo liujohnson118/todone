@@ -29,7 +29,7 @@ const userLoginRoutes=require("./routes/user_login");
 const newTaskRoutes=require("./routes/newTask");
 const allEatsRoutes=require("./routes/allEatsRoutes");
 const updateEmailRoutes=require("./routes/updateEmail");
-
+const updatePWRoutes=require("./routes/updatePW");
 
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
@@ -63,13 +63,13 @@ app.use("/api/classes", classesRoutes(knex));
 app.use("/api/showCat", catRoutes(knex));
 app.use("/user_registration",userRegistrationRoutes(knex));
 app.use("/user_login",userLoginRoutes(knex));
-app.use("/profile",updateEmailRoutes(knex));
+app.use("/updateEmail",updateEmailRoutes(knex));
+app.use("/updatePW",updatePWRoutes(knex));
 app.use("/new_task",newTaskRoutes(knex));
 app.use((req, res, next) => {
   res.locals.user=req.session.username;
   next();
 })
-app.use("/allEats",allEatsRoutes(knex));
 //findLatestTaskByCat retrieves the most recent tasks for each category
 //That are unique to that user
   function findLatestTaskByCat(cat, currentUser) {
