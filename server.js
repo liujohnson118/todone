@@ -188,7 +188,7 @@ app.post("/removeTask",(req,res)=>{
 app.post("/reclassifyTask",(req,res)=>{
   if(req.session.username){
     let taskID=req.body.taskID;
-    let newClass=req.body.taskNewClass
+    let newClass=req.body.taskNewClass;
     if(["b","e","r","w"].indexOf(newClass)===-1){
       res.status(403).send("The class you entered is invalid");
     }
