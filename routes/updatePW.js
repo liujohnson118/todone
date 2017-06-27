@@ -8,8 +8,11 @@ const salt=10;
 module.exports = (knex) => {
 
   /*
-  * Handles POST request for /user_registration form
-  * If user enters a username or email already in our database, send error message
+  * Handles POST request for /updatePW
+  * If not logged in, send error message
+  * If old password entered is wrong, send error message
+  * If old password is correct and new password and new password confirmation match, update database
+  * and redirect to /
   */
   router.post("/", (req, res) => {
     let currentUser=req.session.username;

@@ -10,7 +10,7 @@ module.exports = (knex) => {
   /*
   * Handles POST request for /user_registration form
   * If user enters a username or email already in our database, send error message
-
+  * Create new user in users table and redirect to / otherwise
   */
   router.post("/", (req, res) => {
       knex('users').count("*").where('username',req.body.username).orWhere('email',req.body.email).then((result) => {

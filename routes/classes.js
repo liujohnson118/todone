@@ -6,7 +6,7 @@ const router  = express.Router();
 module.exports = (knex) => {
   /*
   * Handles GET request for /api/taskClasses
-  * Show in json format the table for training set for Naivie Bayes algorithm
+  * Show in json format the table for training set for Naive Bayes algorithm
   */
   router.get("/", (req, res) => {
     knex

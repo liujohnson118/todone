@@ -6,8 +6,10 @@ const router  = express.Router();
 module.exports = (knex) => {
 
   /*
-  * Handles GET request for /api/tasks
-  * Show in json format all tasks
+  * DEPRECATED
+  * NOT USED BY SERVER
+  * KEPT FOR POTENTIAL FUTURE IMPROVEMENT
+  * GET method for seeing all eat tasks
   */
   router.get("/", (req, res) => {
     let currentUser=req.session.username;

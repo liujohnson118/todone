@@ -8,9 +8,9 @@ const bcrypt=require('bcrypt');
 module.exports = (knex) => {
 
   /*
-  * Handles POST request for /user_registration form
-  * If user enters a username or email already in our database, send error message
-
+  * Handles POST request for /updateEmail
+  * If not logged in, send error message
+  * If new email and new email confrimation match, update database with new email and redirect to /
   */
   router.post("/", (req, res) => {
     let currentUser=req.session.username;
@@ -18,7 +18,6 @@ module.exports = (knex) => {
       res.status(403).send('Log in first to access your profile');
     }else{
       if(req.body.newEmail === req.body.newEmailReenter){
-        console.log("FUFFUIJ");
         knex('users').where('username',currentUser).update({email:req.body.newEmail}).then((result)=>{
           res.redirect("/");
         })

@@ -22,7 +22,6 @@ const salt=10;
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 const tasksRoutes = require("./routes/tasks");
-const catRoutes = require("./routes/showCat");
 const classesRoutes = require("./routes/classes");
 const userRegistrationRoutes=require("./routes/userRegistration");
 const userLoginRoutes=require("./routes/user_login");
@@ -46,6 +45,7 @@ app.use(cookieSession({
 // Log knex SQL queries to STDOUT as well
 app.use(knexLogger(knex));
 
+//Style settings
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/styles", sass({
@@ -57,10 +57,6 @@ app.use("/styles", sass({
 app.use(express.static("public"));
 
 // Mount all resource routes
-app.use("/api/users", usersRoutes(knex));
-app.use("/api/tasks", tasksRoutes(knex));
-app.use("/api/classes", classesRoutes(knex));
-app.use("/api/showCat", catRoutes(knex));
 app.use("/user_registration",userRegistrationRoutes(knex));
 app.use("/user_login",userLoginRoutes(knex));
 app.use("/updateEmail",updateEmailRoutes(knex));
@@ -70,8 +66,13 @@ app.use((req, res, next) => {
   res.locals.user=req.session.username;
   next();
 })
-//findLatestTaskByCat retrieves the most recent tasks for each category
-//That are unique to that user
+
+/*
+* Function to find latest task by a category for a user
+* Use only when current user is logged in
+* Input: cat-category ("r","b","w","e") currentUser:username of current user
+* Output: an array of tasks from tasks table for the user. If no tasks, return empty array
+*/
   function findLatestTaskByCat(cat, currentUser) {
     var task;
     console.log("Current USER IS "+currentUser);
@@ -85,8 +86,13 @@ app.use((req, res, next) => {
       }
       })
   }
-  //findAllTasksByCat retrieves all tasks for each category
-  //That are unique to that user
+
+  /*
+  * Find all tasks by a category for current user
+  * Use only when current user is logged in
+  * Input: cat-category ("r","b","w","e") currentUser:username of current user
+  * Output: an array of tasks from tasks table for the user. If no tasks, return empty array
+  */
   function findAllTasksByCat(cat, currentUser) {
     var tasks;
     return knex('tasks').select('*').where('category',cat).andWhere('user_id',currentUser)
@@ -101,6 +107,11 @@ app.use((req, res, next) => {
     })
   }
 
+  /*
+  * Function to find all info about a user
+  * Input: username of current user
+  * Output: username, email, and password for the user
+  */
   function findAllUserInfo(currentUser) {
     var userInfo;
     return knex('users').select('*').where('username', currentUser).limit(1)
@@ -147,22 +158,35 @@ app.get("/", (req, res) => {
   }
 });
 
-//User registration page
+/*
+* GET method for rendering registration/login page
+*/
 app.get("/register",(req,res)=>{
   res.render("register");
 });
 
-//User login page
-//If username exists redirects to
+/*
+* GET method for rendering login page
+*/
 app.get("/login",(req,res)=>{
   res.render("register.ejs");
 });
 
+/*
+* POST method for logout
+* Reset session at logout
+*/
 app.post("/logout",(req,res)=>{
   req.session=null;
   res.redirect("/");
 })
 
+/*
+* DEPRECATED AND NOT USED, KEPT FOR POTENTIAL FUTURE IMPROVEMENT
+* POST route for deleting a task by ID
+* If not logged in, send error message
+* If logged in, delete task from database and redirect to /
+*/
 app.post("/tasks/:id/delete",(req,res)=>{
     if(req.session.username){
       let taskID=req.params.id;
@@ -174,6 +198,11 @@ app.post("/tasks/:id/delete",(req,res)=>{
   }
 })
 
+/*
+* POST method to remove a task by task ID
+* Send error message if not logged in
+* Delete task from database and redirect to /
+*/
 app.post("/removeTask",(req,res)=>{
   if(req.session.username){
     let taskID=req.body.taskID;
@@ -185,6 +214,12 @@ app.post("/removeTask",(req,res)=>{
   }
 })
 
+/*
+* POST method for reclassification of task
+* If user enters a task id not associated with a task, send error message
+* Check input for new class. If it is not one of b e r w, send error message - Will become
+* redundant once drop down menu is implemented
+*/
 app.post("/reclassifyTask",(req,res)=>{
   if(req.session.username){
     let taskID=req.body.taskID;
@@ -208,7 +243,10 @@ app.post("/reclassifyTask",(req,res)=>{
 })
 
 
-
+/*
+* POST method for letting user see and modify their profile
+* contains functions to update email and password
+*/
 app.get("/profile", (req,res) => {
   let currentUser = req.session.username;
   if (currentUser) {
@@ -227,6 +265,10 @@ app.get("/profile", (req,res) => {
     res.render("register");
   }
 })
+
+/*
+* Set up port
+*/
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
