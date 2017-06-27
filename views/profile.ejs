@@ -17,6 +17,14 @@
   <body style="font-size:20px; padding:50px;">
     <br>Hello, <%= userInfo.username %>
     <br>Your current email is: <%= userInfo.email %>
+    <br>To update your email, enter your email and click Update Email</br>
+    <form action="/updateEmail" method="POST">
+    <span>Your new email</span>
+    <input name="newEmail" type="email" placeholder=" Your New Email">
+    <span>Re-enter your email</span>
+    <input name="newEmailReenter" type="email" placeholder=" Your New Email">
+    <button type="submit" value="Register" class="btn btn-default">Update Email</button></form>
+    </form>
   </body>
 
     <%include ./partials/footer.ejs%>
