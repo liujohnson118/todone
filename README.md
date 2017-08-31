@@ -1,14 +1,22 @@
-# Node Skeleton
+# Todone
+
+A smart app that allows users to add and track their tasks. This app is full-stack. It is intended for people to use on a leisure basis. The app will use naive bayes supervised learning method to automatically classify the task created into a task of a particular class: eat, watch, buy, and read. Should mis-classification happens, the user can mannually change the class and the the naive bayes model will learn from this mistake.
+
+## Technologies Used
+* Express
+* JSX
+* Knex
+* PSQL
+* Machine learning
+* Naive bayes
+* Supervised machine learning
+* SCSS
+* Bootstrap
+* jQuery
 
 ## Project Setup
 
-1. Create your own empty repo on GitHub
-2. Clone this repository (do not fork)
-  - Suggestion: When cloning, specify a different folder name that is relevant to your project
-3. Remove the git remote: `git remote rm origin`
-4. Add a remote for your origin: `git remote add origin <your github repo URL>`
-5. Push to the new origin: `git push -u origin master`
-6. Verify that the skeleton code now shows up in your repo on GitHub
+1. Clone the repo
 
 ## Getting Started
 
@@ -23,7 +31,16 @@
 7. Run the server: `npm run local`
 8. Visit `http://localhost:8080/`
 
-## Dependencies
+## User Experience
 
-- Node 5.10.x or above
-- NPM 3.8.x or above
+* The user can sign up and login by completing the forms as shown
+
+!["sign up"](https://github.com/liujohnson118/todone/blob/master/docs/signup.png)
+!["login"](https://github.com/liujohnson118/todone/blob/master/docs/login.png)
+
+* The homepage looks like the following figure when no tasks have been added
+!["homepage"](https://github.com/liujohnson118/todone/blob/master/docs/home.png)
+
+* The user can create a task by clicking "Add" and following prompts.
+!["tasks"](https://github.com/liujohnson118/todone/blob/master/docs/tasks.png)
+
