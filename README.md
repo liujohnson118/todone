@@ -39,8 +39,13 @@ A smart app that allows users to add and track their tasks. This app is full-sta
 !["login"](https://github.com/liujohnson118/todone/blob/master/docs/login.png)
 
 * The homepage looks like the following figure when no tasks have been added
+* The user can create a task by clicking "Add" and following prompts.
 !["homepage"](https://github.com/liujohnson118/todone/blob/master/docs/home.png)
 
-* The user can create a task by clicking "Add" and following prompts.
+* Once tasks have been added, the user can see his/her tasks in the corresponding sections
 !["tasks"](https://github.com/liujohnson118/todone/blob/master/docs/tasks.png)
+
+* To change the category of a task that has been mis-classified; for example, task 24 eat kiwi fruit, which shouldn't be a watch task but an eat task, the user can click "Category" and following prompts.
+
+
 
