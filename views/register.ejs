@@ -8,11 +8,13 @@
     <script>
       $(document).ready(function(){
         $('.signup').hide();
+        $('.login').hide();
         $('.signup-btn').on("click", function() {
+          $('.login').hide();
           $('.signup').slideToggle('slow');
         });
-        $('.login').hide();
         $('.login-btn').on("click", function() {
+          $('.signup').hide();
           $('.login').slideToggle('slow');
         });
       });
@@ -33,56 +35,54 @@
       <div class="row">
         <form  class="form-horizontal" action="/user_registration" method="POST">
           <div class="form-group">
-            <h2 id="registerForm">Sign Up</h2>
-            <label for="username" class="col-sm-2 control-label">Name</label>
-            <div class="col-sm-10">
+            <label for="username" class="col-sm-2 control-label">Username</label>
+            <div class="col-sm-6">
               <input type="text" name="username" class="form-control" id="username" placeholder="Name">
             </div>
           </div>
 
           <div class="form-group">
             <label for="email" class="col-sm-2 control-label">Email</label>
-            <div class="col-sm-10">
+            <div class="col-sm-6">
               <input type="email" name="email" class="form-control" id="email" placeholder="Email">
             </div>
           </div>
 
           <div class="form-group">
             <label for="password" class="col-sm-2 control-label">Password</label>
-            <div class="col-sm-10">
+            <div class="col-sm-6">
               <input type="password" name="password" class="form-control" id="password" placeholder="Password">
             </div>
           </div>
 
           <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
+            <div class="col-sm-offset-2 col-sm-6">
              <button type="submit" value="Register" class="btn btn-default">Sign up</button>
            </div>
           </div>
         </form>
       </div>
     </div>
-			 
+
   <div class="container login">
       <div class="row">
         <form class="form-horizontal" action="/user_login" method="POST">
           <div class="form-group">
-            <h2 id="logInForm">Login</h2>
-            <label for="username" class="col-sm-2 control-label">Name</label>
-            <div class="col-sm-10">
+            <label for="username" class="col-sm-2 control-label">Username</label>
+            <div class="col-sm-6">
               <input type="text" name="username" class="form-control" id="username" placeholder="Name">
             </div>
           </div>
 
           <div class="form-group">
             <label for="password" class="col-sm-2 control-label">Password</label>
-            <div class="col-sm-10">
+            <div class="col-sm-6">
               <input type="password" name="password" class="form-control" id="password" placeholder="Password">
             </div>
           </div>
 
           <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
+            <div class="col-sm-10">
              <button type="submit" value="Login" class="btn btn-default">Login</button>
            </div>
           </div>
