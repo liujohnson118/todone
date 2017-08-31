@@ -46,6 +46,12 @@ A smart app that allows users to add and track their tasks. This app is full-sta
 !["tasks"](https://github.com/liujohnson118/todone/blob/master/docs/tasks.png)
 
 * To change the category of a task that has been mis-classified; for example, task 24 eat kiwi fruit, which shouldn't be a watch task but an eat task, the user can click "Category" and following prompts.
+!["Re-classify"](https://github.com/liujohnson118/todone/blob/master/docs/reCat.png)
+!["Re-classify"](https://github.com/liujohnson118/todone/blob/master/docs/reCat2.png)
+!["Re-classify"](https://github.com/liujohnson118/todone/blob/master/docs/reCat3.png)
 
+* The user can also delete tasks by clicking "Delete" and following prompts
 
+* The user can update his/her email address and/or password by clicking "Your Profile" on the top right corner
+!["Profile"](https://github.com/liujohnson118/todone/blob/master/docs/profile.png)
 
